@@ -1,6 +1,7 @@
 'use client';
 
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const formInputs = [
   {
@@ -78,6 +79,10 @@ export default function TicketSubmissionForm() {
       await axios.post('api', formValues);
 
       form.reset();
+
+      toast.success(
+        'We have received your ticket! A help desk member will be in contact soon.'
+      );
     } catch (err) {
       console.error('Error submitting ticket', err);
     }
