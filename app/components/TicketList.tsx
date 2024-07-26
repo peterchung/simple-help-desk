@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ModalResponseForm from './ModalResponseForm';
 
 interface TicketTypes {
   priority: string;
@@ -30,6 +31,8 @@ export default function TicketList({
     Status: [],
     Priority: [],
   });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [ticketEntry, setTicketEntry] = useState({});
 
   const renderFilter = () => {
     return Object.entries(filterOptions).map(([filterType, options], idx) => (
@@ -97,6 +100,10 @@ export default function TicketList({
     });
   };
 
+  const handleModal = () => {
+    setModalOpen(!modalOpen);
+  };
+
   return (
     <div className='flex flex-col items-center'>
       <div className='my-10'>
@@ -144,7 +151,13 @@ export default function TicketList({
                 })}
               </td>
               <td>
-                <button className='bg-blue-300 text-blue-700 rounded-full py-1 px-2'>
+                <button
+                  onClick={() => {
+                    setTicketEntry(ticket);
+                    handleModal();
+                  }}
+                  className='bg-blue-300 text-blue-700 rounded-full py-1 px-2'
+                >
                   Open Ticket
                 </button>
               </td>
@@ -152,6 +165,11 @@ export default function TicketList({
           ))}
         </tbody>
       </table>
+      <ModalResponseForm
+        isOpen={modalOpen}
+        onDismiss={handleModal}
+        ticket={ticketEntry}
+      />
     </div>
   );
 }
