@@ -34,8 +34,8 @@ export default function TicketList({
   const renderFilter = () => {
     return Object.entries(filterOptions).map(([filterType, options], idx) => (
       <div key={idx}>
-        <ul>
-          <li>{filterType}</li>
+        <ul className='flex space-x-4'>
+          <li>{filterType}:</li>
           {renderFilterOptions(filterType as keyof Filter, options)}
         </ul>
       </div>
@@ -44,7 +44,7 @@ export default function TicketList({
 
   const renderFilterOptions = (filterType: keyof Filter, options: string[]) => {
     return options.map((option, idx) => (
-      <li key={idx}>
+      <li key={idx} className='flex space-x-1'>
         <input
           type='checkbox'
           checked={selectedFilter[filterType].includes(option)}
@@ -98,23 +98,25 @@ export default function TicketList({
   };
 
   return (
-    <div>
-      <div>
-        <div>Filters</div>
+    <div className='flex flex-col items-center'>
+      <div className='my-10'>
+        <div className='flex justify-center text-3xl font-semibold mb-2'>
+          Filters
+        </div>
         {renderFilter()}
+        <div className='flex justify-center mt-2'>
+          <button
+            onClick={clearFilters}
+            className='bg-blue-700 text-white rounded-full font-semibold px-6 py-2'
+          >
+            Clear Filters
+          </button>
+        </div>
       </div>
-      <div>
-        <button
-          onClick={clearFilters}
-          className='bg-blue-700 text-white rounded-full font-semibold px-6 py-2'
-        >
-          Clear Filters
-        </button>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Priority</th>
+      <table className='w-[1000px] rounded-lg overflow-hidden table-fixed'>
+        <thead className='bg-blue-700 text-white'>
+          <tr className='text-center tetx-lg'>
+            <th className='py-2'>Priority</th>
             <th>Status</th>
             <th>Requested By</th>
             <th>Email</th>
@@ -125,8 +127,13 @@ export default function TicketList({
         </thead>
         <tbody>
           {filteredTicketList.map((ticket: TicketTypes, idx: number) => (
-            <tr key={idx}>
-              <td>{ticket.priority}</td>
+            <tr
+              key={idx}
+              className={`text-center ${
+                idx % 2 === 0 ? 'bg-gray-200' : 'bg-white'
+              }`}
+            >
+              <td className='py-2'>{ticket.priority}</td>
               <td>{ticket.status}</td>
               <td>{ticket.requestedBy}</td>
               <td>{ticket.email}</td>
@@ -135,6 +142,11 @@ export default function TicketList({
                 {ticket.dateCreated.toLocaleDateString('en-US', {
                   timeZone: 'UTC',
                 })}
+              </td>
+              <td>
+                <button className='bg-blue-300 text-blue-700 rounded-full py-1 px-2'>
+                  Open Ticket
+                </button>
               </td>
             </tr>
           ))}
