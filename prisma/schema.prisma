@@ -14,26 +14,26 @@ datasource db {
 }
 
 model TicketItem {
-  ticketId Int @id @default(autoincrement())
-  priority String
-  status String
-  requestedBy String
-  email String
-  subject String
-  dateCreated Date @default(now()) @db.Date
+  ticketId       Int             @id @default(autoincrement())
+  priority       String
+  status         String
+  requestedBy    String
+  email          String
+  subject        String
+  dateCreated    DateTime        @default(now()) @db.Date
   ticketResponse TicketResponse?
 }
 
 model TicketResponse {
-  ticketId Int @id
-  requestedBy String
-  email String
-  priority String
-  dateCreated Date @db.DateTime
-  lastModified Date @default(now()) @db.Date
-  subject String
+  ticketId         Int        @id
+  requestedBy      String
+  email            String
+  priority         String
+  dateCreated      DateTime   @db.Date
+  lastModified     DateTime   @default(now()) @db.Date
+  subject          String
   issueDescription String
-  status String
-  lastResponse String
-  ticketItem TicketItem @relation(fields: [ticketId], references: [ticketId])
+  status           String
+  lastResponse     String
+  ticketItem       TicketItem @relation(fields: [ticketId], references: [ticketId])
 }
