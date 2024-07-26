@@ -14,7 +14,7 @@ datasource db {
 }
 
 model TicketItem {
-  ticketId int @id @default(autoincrement())
+  ticketId Int @id @default(autoincrement())
   priority String
   status String
   requestedBy String
@@ -25,7 +25,7 @@ model TicketItem {
 }
 
 model TicketResponse {
-  ticketId int @id
+  ticketId Int @id
   requestedBy String
   email String
   priority String
