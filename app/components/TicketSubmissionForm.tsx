@@ -39,7 +39,7 @@ const formInputs = [
 ];
 
 export default function TicketSubmissionForm() {
-  const handleFormSubmission = async (event) => {
+  const handleFormSubmission = async (event: React.FormEvent) => {
     event.preventDefault();
 
     const form = event.target as HTMLFormElement;
