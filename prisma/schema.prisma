@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TicketItem {
+  ticketId int @id @default(autoincrement())
+  priority String
+  status String
+  requestedBy String
+  email String
+  subject String
+  dateCreated DateTime @default(now()) @db.Date
+  ticketResponse TicketResponse?
+}
+
+model TicketResponse {
+  ticketId int @id
+  requestedBy String
+  email String
+  priority String
+  dateCreated DateTime @db.DateTime
+  lastModified DateTime @default(now()) @db.Date
+  subject String
+  issueDescription String
+  status String
+  lastResponse String
+  ticketItem TicketItem @relation(fields: [ticketId], references: [ticketId])
+}
