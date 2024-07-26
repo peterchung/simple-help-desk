@@ -1,5 +1,7 @@
 'use client';
 
+import axios from 'axios';
+
 const formInputs = [
   {
     inputType: 'input',
@@ -37,9 +39,44 @@ const formInputs = [
 ];
 
 export default function TicketSubmissionForm() {
+  const handleFormSubmission = async (event) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const name = form.elements.namedItem('name') as HTMLInputElement;
+    const email = form.elements.namedItem('email') as HTMLInputElement;
+    const subject = form.elements.namedItem('subject') as HTMLInputElement;
+    const priority = form.elements.namedItem('priority') as HTMLSelectElement;
+    const description = form.elements.namedItem(
+      'description'
+    ) as HTMLTextAreaElement;
+
+    const isValid = form.reportValidity();
+    if (!isValid) {
+      console.log('Form is invalid.');
+      return;
+    }
+
+    const formValues = {
+      name: name.value,
+      email: email.value,
+      subject: subject.value,
+      priority: priority.value,
+      description: description.value,
+    };
+
+    try {
+      await axios.post('api', formValues);
+
+      form.reset();
+    } catch (err) {
+      console.error('Error submitting ticket', err);
+    }
+  };
+
   return (
     <div className='w-1/3 bg-white py-6 rounded-2xl'>
-      <form>
+      <form onSubmit={handleFormSubmission}>
         <div className='w-4/5 mx-auto'>
           {formInputs.map((input, idx) => (
             <div key={idx} className='flex flex-col mb-4'>
