@@ -20,7 +20,7 @@ model TicketItem {
   requestedBy String
   email String
   subject String
-  dateCreated DateTime @default(now()) @db.Date
+  dateCreated Date @default(now()) @db.Date
   ticketResponse TicketResponse?
 }
 
@@ -29,8 +29,8 @@ model TicketResponse {
   requestedBy String
   email String
   priority String
-  dateCreated DateTime @db.DateTime
-  lastModified DateTime @default(now()) @db.Date
+  dateCreated Date @db.DateTime
+  lastModified Date @default(now()) @db.Date
   subject String
   issueDescription String
   status String
