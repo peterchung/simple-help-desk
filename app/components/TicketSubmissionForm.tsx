@@ -51,6 +51,15 @@ export default function TicketSubmissionForm() {
       'description'
     ) as HTMLTextAreaElement;
 
+    // Check to ensure a valid priority has been selected
+    if (priority.value === 'Select priority...') {
+      priority.setCustomValidity('Please select a valid priority');
+      priority.reportValidity();
+      return;
+    } else {
+      priority.setCustomValidity('');
+    }
+
     const isValid = form.reportValidity();
     if (!isValid) {
       console.log('Form is invalid.');
@@ -71,6 +80,21 @@ export default function TicketSubmissionForm() {
       form.reset();
     } catch (err) {
       console.error('Error submitting ticket', err);
+    }
+  };
+
+  // Handles the selection change when a user goes from 'Select priority' to a valid option
+  const handleInputChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const input = event.target;
+
+    if (input.validity.valid) {
+      input.setCustomValidity('');
+    }
+
+    if (input.name === 'priority' && input.value !== 'Select priority...') {
+      input.setCustomValidity('');
+    } else {
+      input.setCustomValidity('Please select a valid priority');
     }
   };
 
@@ -97,6 +121,7 @@ export default function TicketSubmissionForm() {
                   name={input.name}
                   required={true}
                   className='border border-gray-200 rounded-md py-2'
+                  onChange={handleInputChange}
                 >
                   {input.option.map((priority, idx) => (
                     <option key={idx}>{priority}</option>
