@@ -46,3 +46,35 @@ export const POST = async (req: NextRequest) => {
     );
   }
 };
+
+export const GET = async (req: NextRequest) => {
+  try {
+    const ticketId = req.nextUrl.searchParams.get('ticketId');
+
+    if (!ticketId) {
+      return NextResponse.json(
+        {
+          error: 'Ticket ID is required',
+        },
+        { status: 400 }
+      );
+    }
+
+    const ticketResponseData = await db.ticketResponse.findUnique({
+      where: {
+        ticketId: parseInt(ticketId),
+      },
+    });
+
+    return NextResponse.json(ticketResponseData);
+  } catch (err) {
+    return NextResponse.json(
+      {
+        error: `Error occured while retrieving ticket: ${err}`,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+};

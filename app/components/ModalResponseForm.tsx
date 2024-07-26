@@ -1,7 +1,129 @@
 'use client';
 
-export default function ModalResponseForm({ isOpen, onDismiss, ticket }) {
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'sonner';
+
+interface TicketResponseType {
+  ticketId: number;
+  requestedBy: string;
+  email: string;
+  priority: string;
+  dateCreated: Date;
+  lastModified: Date;
+  subject: string;
+  issueDescription: string;
+  status: string;
+  lastResponse: string;
+}
+
+interface TicketItem {
+  ticketId: number;
+  priority: string;
+  status: string;
+  requestedBy: string;
+  email: string;
+  subject: string;
+  dateCreated: Date;
+}
+
+interface ModalResponseFormProps {
+  isOpen: boolean;
+  onDismiss: () => void;
+  ticket: TicketItem;
+}
+
+const formLabels = {
+  requestedBy: 'Requested by:',
+  email: 'Email:',
+  priority: 'Priority:',
+  dateCreated: 'Date Created:',
+  lastModified: 'Last Modified:',
+  subject: 'Subject:',
+  issueDescription: 'Issue description:',
+  status: 'Status:',
+  lastResponse: 'Last response:',
+  currentResponse: 'Response:',
+};
+
+export default function ModalResponseForm({
+  isOpen,
+  onDismiss,
+  ticket,
+}: ModalResponseFormProps) {
+  const [ticketData, setTicketData] = useState<TicketResponseType | null>(null);
+  const [status, setStatus] = useState('');
+  const [currentResponse, setCurrentResponse] = useState('');
+
+  // Retrieve ticket data and set states on initial render and when isOpen
+  // or ticket changes
+  useEffect(() => {
+    const loadModalData = async () => {
+      const data = await getTicketModalData(ticket.ticketId);
+      setTicketData(data);
+      setStatus(data?.status || '');
+    };
+
+    if (ticket.ticketId) loadModalData();
+  }, [isOpen, ticket]);
+
+  const getTicketModalData = async (ticketId: number) => {
+    try {
+      const response = await axios.get('/api', { params: { ticketId } });
+
+      return response.data;
+    } catch (err) {
+      console.error('Error loading ticket data', err);
+
+      return null;
+    }
+  };
+
+  // Ensures modal should be open
   if (!isOpen) return null;
+
+  const renderModalData = () => {
+    if (!ticketData) return null;
+
+    return Object.entries(formLabels).map(([property, label]) => {
+      const inputValue = ticketData[property as keyof TicketResponseType];
+
+      return (
+        <div key={property} className='mb-4'>
+          <label className='text-black font-bold'>{label}</label>
+          {property === 'status' ? (
+            <select
+              value={status}
+              onChange={(event) => setStatus(event.target.value)}
+              name='status'
+              required={true}
+              className='border rounded w-full shadow text-black py-2'
+            >
+              <option value='New'>New</option>
+              <option value='In progress'>In progress</option>
+              <option value='Resolved'>Resolved</option>
+            </select>
+          ) : property === 'currentResponse' ? (
+            <textarea
+              value={currentResponse}
+              onChange={(event) => setCurrentResponse(event.target.value)}
+              name='response'
+              rows={3}
+              className='border rounded w-full shadow text-black'
+            />
+          ) : (
+            <div className='text-black'>
+              {property === 'dateCreated' || property === 'lastModified'
+                ? new Date(inputValue).toLocaleDateString('en-US', {
+                    timeZone: 'UTC',
+                  })
+                : String(inputValue)}
+            </div>
+          )}
+        </div>
+      );
+    });
+  };
 
   return (
     <div
@@ -14,10 +136,27 @@ export default function ModalResponseForm({ isOpen, onDismiss, ticket }) {
         }}
         className='min-w-[600px] max-w-full overflow-x-hidden min-h-[800px] bg-white rounded-xl p-2 flex flex-col relative'
       >
-        <div>
-          <header>Ticket #</header>
+        <div className='flex justify-center'>
+          <header className='text-lg font-bold'>
+            Ticket #{ticketData?.ticketId}
+          </header>
         </div>
-        <form>Modal data</form>
+        <div>
+          <form>
+            {renderModalData()}
+            <div className='space-x-2'>
+              <button
+                onClick={onDismiss}
+                className='bg-blue-300 text-blue-700 text-sm font-semibold rounded-full py-3 px-8'
+              >
+                Close
+              </button>
+              <button className='bg-blue-700 text-white text-sm font-semibold rounded-full py-3 px-8'>
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

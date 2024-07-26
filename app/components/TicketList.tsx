@@ -4,6 +4,7 @@ import { useState } from 'react';
 import ModalResponseForm from './ModalResponseForm';
 
 interface TicketTypes {
+  ticketId: number;
   priority: string;
   status: string;
   requestedBy: string;
@@ -32,7 +33,7 @@ export default function TicketList({
     Priority: [],
   });
   const [modalOpen, setModalOpen] = useState(false);
-  const [ticketEntry, setTicketEntry] = useState({});
+  const [ticketEntry, setTicketEntry] = useState<TicketTypes | null>(null);
 
   const renderFilter = () => {
     return Object.entries(filterOptions).map(([filterType, options], idx) => (
@@ -165,11 +166,13 @@ export default function TicketList({
           ))}
         </tbody>
       </table>
-      <ModalResponseForm
-        isOpen={modalOpen}
-        onDismiss={handleModal}
-        ticket={ticketEntry}
-      />
+      {ticketEntry && (
+        <ModalResponseForm
+          isOpen={modalOpen}
+          onDismiss={handleModal}
+          ticket={ticketEntry}
+        />
+      )}
     </div>
   );
 }
