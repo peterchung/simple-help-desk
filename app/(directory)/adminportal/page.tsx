@@ -1,6 +1,8 @@
 import TicketList from '@/app/components/TicketList';
 import db from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 const getTickets = async () => {
   try {
     const ticketList = await db.ticketItem.findMany({

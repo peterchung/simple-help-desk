@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 interface TicketResponseType {
   ticketId: number;
@@ -54,6 +55,7 @@ export default function ModalResponseForm({
   const [ticketData, setTicketData] = useState<TicketResponseType | null>(null);
   const [status, setStatus] = useState('');
   const [currentResponse, setCurrentResponse] = useState('');
+  const router = useRouter();
 
   // Retrieve ticket data and set states on initial render and when isOpen
   // or ticket changes
@@ -82,6 +84,7 @@ export default function ModalResponseForm({
   // Ensures modal should be open
   if (!isOpen) return null;
 
+  // Renders all ticket data and proper input types in modal
   const renderModalData = () => {
     if (!ticketData) return null;
 
@@ -125,6 +128,49 @@ export default function ModalResponseForm({
     });
   };
 
+  // Handles updating ticket data
+  // Uses router.refresh() to update the stale data on the
+  // Admin server component page
+  const handleFormUpdate = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const form = event.target as HTMLFormElement;
+    const status = form.elements.namedItem('status') as HTMLSelectElement;
+    const response = form.elements.namedItem('response') as HTMLTextAreaElement;
+
+    const isValidForm = form.reportValidity();
+
+    if (!isValidForm) {
+      console.log('invalid form');
+      return;
+    }
+
+    const newFormValues = {
+      ticketId: ticket.ticketId,
+      status: status.value,
+      lastModified: new Date(),
+      lastResponse: response.value,
+    };
+
+    try {
+      await axios.put('api', newFormValues);
+
+      setTicketData((prevTicketData: any) => ({
+        ...prevTicketData,
+        ...newFormValues,
+      }));
+
+      setCurrentResponse('');
+
+      toast.success('Ticket has been updated');
+
+      router.refresh();
+      onDismiss();
+    } catch (err) {
+      console.error('Error updating ticket', err);
+    }
+  };
+
   return (
     <div
       onClick={onDismiss}
@@ -142,7 +188,7 @@ export default function ModalResponseForm({
           </header>
         </div>
         <div>
-          <form>
+          <form onSubmit={handleFormUpdate}>
             {renderModalData()}
             <div className='space-x-2'>
               <button

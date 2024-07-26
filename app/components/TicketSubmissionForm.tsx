@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const formInputs = [
   {
@@ -40,6 +41,8 @@ const formInputs = [
 ];
 
 export default function TicketSubmissionForm() {
+  const router = useRouter();
+
   const handleFormSubmission = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -83,6 +86,8 @@ export default function TicketSubmissionForm() {
       toast.success(
         'We have received your ticket! A help desk member will be in contact soon.'
       );
+
+      router.refresh();
     } catch (err) {
       console.error('Error submitting ticket', err);
     }

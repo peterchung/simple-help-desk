@@ -78,3 +78,38 @@ export const GET = async (req: NextRequest) => {
     );
   }
 };
+
+export const PUT = async (req: NextRequest) => {
+  try {
+    const { ticketId, status, lastModified, lastResponse } = await req.json();
+
+    const updateTicketItem = await db.ticketItem.update({
+      where: {
+        ticketId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    const updateTicketResponse = await db.ticketResponse.update({
+      where: {
+        ticketId,
+      },
+      data: {
+        status,
+        lastModified,
+        lastResponse,
+      },
+    });
+
+    return NextResponse.json({ status: 200 });
+  } catch (err) {
+    return NextResponse.json(
+      {
+        error: `An error occured while retrieving the transaction: ${err}`,
+      },
+      { status: 500 }
+    );
+  }
+};
