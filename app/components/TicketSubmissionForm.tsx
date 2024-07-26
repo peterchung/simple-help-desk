@@ -38,12 +38,12 @@ const formInputs = [
 
 export default function TicketSubmissionForm() {
   return (
-    <div>
+    <div className='w-1/3 bg-white py-6 rounded-2xl'>
       <form>
-        <div>
+        <div className='w-4/5 mx-auto'>
           {formInputs.map((input, idx) => (
-            <div key={idx}>
-              <label>{input.label}</label>
+            <div key={idx} className='flex flex-col mb-4'>
+              <label className='font-semibold'>{input.label}</label>
               {input.inputType === 'input' && (
                 <input
                   id={input.label}
@@ -51,10 +51,16 @@ export default function TicketSubmissionForm() {
                   name={input.name}
                   placeholder={input.placeholder}
                   required={true}
+                  className='border border-gray-200 rounded-md py-2'
                 />
               )}
               {input.inputType === 'select' && input.option && (
-                <select id={input.label} name={input.name} required={true}>
+                <select
+                  id={input.label}
+                  name={input.name}
+                  required={true}
+                  className='border border-gray-200 rounded-md py-2'
+                >
                   {input.option.map((priority, idx) => (
                     <option key={idx}>{priority}</option>
                   ))}
@@ -66,10 +72,16 @@ export default function TicketSubmissionForm() {
                   name={input.name}
                   placeholder={input.placeholder}
                   required={true}
+                  className='border border-gray-200 rounded-md py-2'
                 />
               )}
             </div>
           ))}
+        </div>
+        <div className='flex justify-center'>
+          <button className='bg-blue-700 text-white font-semibold rounded-full w-32 py-2'>
+            Submit
+          </button>
         </div>
       </form>
     </div>
