@@ -1,6 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
-const globalPrisma = global;
+declare global {
+  namespace NodeJS {
+    interface Global {
+      prisma: PrismaClient;
+    }
+  }
+}
+
+const globalPrisma = global as typeof globalThis & { prisma: PrismaClient };
 let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
