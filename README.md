@@ -38,6 +38,7 @@ Click this [link](https://simple-help-desk.vercel.app/) to view the deployed app
     <header>Admin Portal</header>
     <p>Admin Portal where users can view submitted tickets, filter by status or priority, and update tickets</p>
     <img alt='Home page' src='/public/help-desk-admin-portal.png'>
+    <img alt='Home page' src='/public/help-desk-modal.png'>
   </div>
 <br />
 
