@@ -2,30 +2,52 @@
 
 This is a full stack simple help desk application. In this application, users can submit help desk tickets and admins can review all submitted tickets and update tickets.
 
-Click this [link](https://simple-help-desk.vercel.app/) to view the deployed application.
+Click this [link](https://simple-help-desk.vercel.app/) to view the deployed application. This application was deployed using Vercel.
+
+## Running in Development Mode
+
+- Fork and clone repo
+- npm install
+- create a local .env file in root directory
+- Add your own DATABASE_URL='your database URI' to the .env file
+- npx prisma init to initiate Prisma
+- npx prisma generate to generate the Prisma Client
+- npx prisma db push to push the schema model to your db
+- npm run dev
 
 ## About the Project
 
-[![Typescript][TS.js]][TS-url][![Next.js][Next.js]][Next-url][![React][React.js]][React-url][![Postgres][Postgres]][Postgres-url][![Tailwind][Tailwind]][Tailwind-url]
+[![Typescript][TS.js]][TS-url][![Next.js][Next.js]][Next-url][![React][React.js]][React-url][![Postgres][Postgres]][Postgres-url][![Tailwind CSS][Tailwind CSS]][Tailwind-url]
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Features:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Users can create and submit new tickets on the User Portal
+- Admins can view a list of all submitted tickets on the Admin Portal
+- Ticket table can be filtered based on ticket status and ticket priority
+- Admins can open a ticket modal and update the ticket status and leave comments
+- Navigation bar to navigate between User Portal, Admin Portal, and Home page
 
-## Learn More
+<br />
+  <div align='center'>
+    <header>Home Page</header>
+    <p>Landing page where users can navigate to either the User Portal or Admin Portal</p>
+    <img alt='Home page' src='/public/help-desk-home-page.png'>
+    <header>User Portal</header>
+    <p>User Portal where users can submit tickets</p>
+    <img alt='User portal' src='/public/help-desk-user-portal.png'>
+    <header>Admin Portal</header>
+    <p>Admin Portal where users can view submitted tickets, filter by status or priority, and update tickets</p>
+    <img alt='Home page' src='/public/help-desk-admin-portal.png'>
+  </div>
+<br />
 
-To learn more about Next.js, take a look at the following resources:
+## In Development:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Login functionality with bcrypt hashing for both users and admins
+- Allow admins to delete tickets
+- Allow admins to sort ticket list based on date, status, or priority
+- Ticket assignment functionality for admins
+- Unit, integration, and end-to-end testing
 
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
