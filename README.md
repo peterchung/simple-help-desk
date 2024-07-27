@@ -1,20 +1,12 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Simple Help Desk
 
-## Getting Started
+This is a full stack simple help desk application. In this application, users can submit help desk tickets and admins can review all submitted tickets and update tickets.
 
-First, run the development server:
+Click this [link](https://simple-help-desk.vercel.app/) to view the deployed application.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About the Project
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[![Typescript][TS.js]][TS-url][![Next.js][Next.js]][![React][React.js]][![Postgres][Postgres]][Postgres-url][![Tailwind][Tailwind]][Tailwind-url]
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
