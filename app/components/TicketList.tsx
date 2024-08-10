@@ -108,7 +108,7 @@ export default function TicketList({
         </div>
       </div>
       <div className='flex flex-col items-center'>
-        <table className='md:w-[750px] lg:w-[1000px] rounded-lg overflow-hidden sm:table-auto'>
+        <table className='md:w-[750px] lg:w-[1000px] rounded-lg overflow-hidden sm:table-auto mb-6'>
           <thead className='bg-blue-700 text-white'>
             <tr className='text-center text-xs sm:text-lg'>
               <th className='sm:p-2'>Priority</th>
