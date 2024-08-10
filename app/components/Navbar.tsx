@@ -8,11 +8,11 @@ export default function Navbar() {
 
   return (
     <nav className='border border-gray-300'>
-      <div className='flex justify-between px-24 py-6'>
+      <div className='flex space-x-4 justify-center sm:justify-between px-24 py-6'>
         <div className='text-blue-700 text-4xl font-bold'>
           {pathname === '/userportal' ? 'User Portal' : 'Admin Portal'}
         </div>
-        <div className='space-x-4'>
+        <div className='flex flex-col space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0'>
           <Link href='/'>
             <button className='bg-blue-700 text-white rounded-full w-32 py-2 font-semibold'>
               Home
