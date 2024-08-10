@@ -4,35 +4,40 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import {
+  TicketResponseType,
+  TicketItem,
+  ModalResponseFormProps,
+} from '@/lib/types';
 
-interface TicketResponseType {
-  ticketId: number;
-  requestedBy: string;
-  email: string;
-  priority: string;
-  dateCreated: Date;
-  lastModified: Date;
-  subject: string;
-  issueDescription: string;
-  status: string;
-  lastResponse: string;
-}
+// interface TicketResponseType {
+//   ticketId: number;
+//   requestedBy: string;
+//   email: string;
+//   priority: string;
+//   dateCreated: Date;
+//   lastModified: Date;
+//   subject: string;
+//   issueDescription: string;
+//   status: string;
+//   lastResponse: string;
+// }
 
-interface TicketItem {
-  ticketId: number;
-  priority: string;
-  status: string;
-  requestedBy: string;
-  email: string;
-  subject: string;
-  dateCreated: Date;
-}
+// interface TicketItem {
+//   ticketId: number;
+//   priority: string;
+//   status: string;
+//   requestedBy: string;
+//   email: string;
+//   subject: string;
+//   dateCreated: Date;
+// }
 
-interface ModalResponseFormProps {
-  isOpen: boolean;
-  onDismiss: () => void;
-  ticket: TicketItem;
-}
+// interface ModalResponseFormProps {
+//   isOpen: boolean;
+//   onDismiss: () => void;
+//   ticket: TicketItem;
+// }
 
 const formLabels = {
   requestedBy: 'Requested by:',
