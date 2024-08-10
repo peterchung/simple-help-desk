@@ -9,48 +9,20 @@ import {
   TicketItem,
   ModalResponseFormProps,
 } from '@/lib/types';
+import { formLabels } from '@/lib/modalFormLabels';
 
-// interface TicketResponseType {
-//   ticketId: number;
-//   requestedBy: string;
-//   email: string;
-//   priority: string;
-//   dateCreated: Date;
-//   lastModified: Date;
-//   subject: string;
-//   issueDescription: string;
-//   status: string;
-//   lastResponse: string;
-// }
-
-// interface TicketItem {
-//   ticketId: number;
-//   priority: string;
-//   status: string;
-//   requestedBy: string;
-//   email: string;
-//   subject: string;
-//   dateCreated: Date;
-// }
-
-// interface ModalResponseFormProps {
-//   isOpen: boolean;
-//   onDismiss: () => void;
-//   ticket: TicketItem;
-// }
-
-const formLabels = {
-  requestedBy: 'Requested by:',
-  email: 'Email:',
-  priority: 'Priority:',
-  dateCreated: 'Date Created:',
-  lastModified: 'Last Modified:',
-  subject: 'Subject:',
-  issueDescription: 'Issue description:',
-  status: 'Status:',
-  lastResponse: 'Last response:',
-  currentResponse: 'Response:',
-};
+// const formLabels = {
+//   requestedBy: 'Requested by:',
+//   email: 'Email:',
+//   priority: 'Priority:',
+//   dateCreated: 'Date Created:',
+//   lastModified: 'Last Modified:',
+//   subject: 'Subject:',
+//   issueDescription: 'Issue description:',
+//   status: 'Status:',
+//   lastResponse: 'Last response:',
+//   currentResponse: 'Response:',
+// };
 
 export default function ModalResponseForm({
   isOpen,
@@ -179,13 +151,13 @@ export default function ModalResponseForm({
   return (
     <div
       onClick={onDismiss}
-      className='fixed w-screen h-screen bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center'
+      className='fixed w-full h-full bg-black bg-opacity-60 top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center'
     >
       <div
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className='min-w-[600px] max-w-full overflow-x-hidden min-h-[800px] bg-white rounded-xl p-2 flex flex-col relative'
+        className='min-w-[200px] md:min-w-[600px] md:max-w-[600px] overflow-x-hidden max-h-[90vh] overflow-y-auto bg-white rounded-xl p-2 flex flex-col relative'
       >
         <div className='flex justify-center'>
           <header className='text-lg font-bold'>
