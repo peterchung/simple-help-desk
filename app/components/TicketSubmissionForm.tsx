@@ -11,7 +11,7 @@ export default function TicketSubmissionForm() {
   const router = useRouter();
 
   return (
-    <div className='w-1/3 bg-white py-6 rounded-2xl'>
+    <div className='w-10/12 xl:w-2/4 bg-white py-6 rounded-2xl'>
       <form onSubmit={(event) => handleFormSubmission(event, router)}>
         <div className='w-4/5 mx-auto'>
           {formInputs.map((input, idx) => (
