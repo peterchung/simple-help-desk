@@ -106,8 +106,8 @@ export default function TicketList({
   };
 
   return (
-    <div className='flex flex-col items-center'>
-      <div className='my-10'>
+    <div>
+      <div className='my-10 flex flex-col items-center'>
         <div className='flex justify-center text-3xl font-semibold mb-2'>
           Filters
         </div>
@@ -121,51 +121,47 @@ export default function TicketList({
           </button>
         </div>
       </div>
-      <table className='w-[1000px] rounded-lg overflow-hidden table-fixed'>
-        <thead className='bg-blue-700 text-white'>
-          <tr className='text-center tetx-lg'>
-            <th className='py-2'>Priority</th>
-            <th>Status</th>
-            <th>Requested By</th>
-            <th>Email</th>
-            <th>Subject</th>
-            <th>Date Created</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredTicketList.map((ticket: TicketTypes, idx: number) => (
-            <tr
-              key={idx}
-              className={`text-center ${
-                idx % 2 === 0 ? 'bg-gray-200' : 'bg-white'
-              }`}
-            >
-              <td className='py-2'>{ticket.priority}</td>
-              <td>{ticket.status}</td>
-              <td>{ticket.requestedBy}</td>
-              <td>{ticket.email}</td>
-              <td>{ticket.subject}</td>
-              <td>
-                {ticket.dateCreated.toLocaleDateString('en-US', {
-                  timeZone: 'UTC',
-                })}
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    setTicketEntry(ticket);
-                    handleModal();
-                  }}
-                  className='bg-blue-300 text-blue-700 rounded-full py-1 px-2'
-                >
-                  Open Ticket
-                </button>
-              </td>
+      <div className='flex flex-col items-center'>
+        <table className='md:w-[750px] lg:w-[1000px] rounded-lg overflow-hidden sm:table-auto'>
+          <thead className='bg-blue-700 text-white'>
+            <tr className='text-center text-xs sm:text-lg'>
+              <th className='sm:p-2'>Priority</th>
+              <th className='sm:p-2'>Status</th>
+              <th className='sm:p-2 max-w-[100px]'>Requested By</th>
+              <th className='sm:p-2 max-w-[100px]'>Subject</th>
+              <th className='sm:p-2'>Date Created</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredTicketList.map((ticket: TicketTypes, idx: number) => (
+              <tr
+                key={idx}
+                onClick={() => {
+                  setTicketEntry(ticket);
+                  handleModal();
+                }}
+                className={`text-center cursor-pointer ${
+                  idx % 2 === 0 ? 'bg-gray-200' : 'bg-white'
+                }`}
+              >
+                <td className='sm:py-2'>{ticket.priority}</td>
+                <td className='sm:py-2'>{ticket.status}</td>
+                <td className='sm:py-2 max-w-[100px] truncate'>
+                  {ticket.requestedBy}
+                </td>
+                <td className='sm:py-2 max-w-[100px] truncate'>
+                  {ticket.subject}
+                </td>
+                <td>
+                  {ticket.dateCreated.toLocaleDateString('en-US', {
+                    timeZone: 'UTC',
+                  })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {ticketEntry && (
         <ModalResponseForm
           isOpen={modalOpen}

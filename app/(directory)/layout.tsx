@@ -6,9 +6,9 @@ export default function DirectoryLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className='w-full'>
       <Navbar />
-      {children}
+      <div className='w-full px-4 sm:px-0'>{children}</div>
     </div>
   );
 }
