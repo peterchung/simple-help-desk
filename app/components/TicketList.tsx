@@ -2,21 +2,7 @@
 
 import { useState } from 'react';
 import ModalResponseForm from './ModalResponseForm';
-
-interface TicketTypes {
-  ticketId: number;
-  priority: string;
-  status: string;
-  requestedBy: string;
-  email: string;
-  subject: string;
-  dateCreated: Date;
-}
-
-interface Filter {
-  Status: string[];
-  Priority: string[];
-}
+import { TicketTypes, Filter } from '@/lib/types';
 
 const filterOptions = {
   Status: ['New', 'In progress', 'Resolved'],
