@@ -17,7 +17,6 @@ export interface TicketResponseType {
   ticketId: number;
   requestedBy: string;
   email: string;
-  priority: string;
   dateCreated: Date;
   lastModified: Date;
   subject: string;
