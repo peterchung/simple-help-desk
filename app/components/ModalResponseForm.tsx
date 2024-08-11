@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import {
   TicketResponseType,
@@ -10,19 +8,7 @@ import {
   ModalResponseFormProps,
 } from '@/lib/types';
 import { formLabels } from '@/lib/modalFormLabels';
-
-// const formLabels = {
-//   requestedBy: 'Requested by:',
-//   email: 'Email:',
-//   priority: 'Priority:',
-//   dateCreated: 'Date Created:',
-//   lastModified: 'Last Modified:',
-//   subject: 'Subject:',
-//   issueDescription: 'Issue description:',
-//   status: 'Status:',
-//   lastResponse: 'Last response:',
-//   currentResponse: 'Response:',
-// };
+import { getTicketModalData, handleFormUpdate } from '@/lib/modalFormHandlers';
 
 export default function ModalResponseForm({
   isOpen,
@@ -45,18 +31,6 @@ export default function ModalResponseForm({
 
     if (ticket.ticketId) loadModalData();
   }, [isOpen, ticket]);
-
-  const getTicketModalData = async (ticketId: number) => {
-    try {
-      const response = await axios.get('/api', { params: { ticketId } });
-
-      return response.data;
-    } catch (err) {
-      console.error('Error loading ticket data', err);
-
-      return null;
-    }
-  };
 
   // Ensures modal should be open
   if (!isOpen) return null;
@@ -105,49 +79,6 @@ export default function ModalResponseForm({
     });
   };
 
-  // Handles updating ticket data
-  // Uses router.refresh() to update the stale data on the
-  // Admin server component page
-  const handleFormUpdate = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const status = form.elements.namedItem('status') as HTMLSelectElement;
-    const response = form.elements.namedItem('response') as HTMLTextAreaElement;
-
-    const isValidForm = form.reportValidity();
-
-    if (!isValidForm) {
-      console.log('invalid form');
-      return;
-    }
-
-    const newFormValues = {
-      ticketId: ticket.ticketId,
-      status: status.value,
-      lastModified: new Date(),
-      lastResponse: response.value,
-    };
-
-    try {
-      await axios.put('api', newFormValues);
-
-      setTicketData((prevTicketData: any) => ({
-        ...prevTicketData,
-        ...newFormValues,
-      }));
-
-      setCurrentResponse('');
-
-      toast.success('Ticket has been updated');
-
-      router.refresh();
-      onDismiss();
-    } catch (err) {
-      console.error('Error updating ticket', err);
-    }
-  };
-
   return (
     <div
       onClick={onDismiss}
@@ -165,7 +96,18 @@ export default function ModalResponseForm({
           </header>
         </div>
         <div>
-          <form onSubmit={handleFormUpdate}>
+          <form
+            onSubmit={(event) =>
+              handleFormUpdate(
+                event,
+                ticket.ticketId,
+                setTicketData,
+                setCurrentResponse,
+                onDismiss,
+                router
+              )
+            }
+          >
             {renderModalData()}
             <div className='space-x-2'>
               <button
