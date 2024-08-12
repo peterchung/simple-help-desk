@@ -88,7 +88,7 @@ export default function ModalResponseForm({
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className='min-w-[200px] md:min-w-[600px] md:max-w-[600px] overflow-x-hidden max-h-[90vh] overflow-y-auto bg-white rounded-xl p-2 flex flex-col relative'
+        className='max-w-[300px] md:min-w-[600px] md:max-w-[600px] overflow-x-hidden max-h-[90vh] overflow-y-auto bg-white rounded-xl p-2 flex flex-col relative'
       >
         <div className='flex justify-center'>
           <header className='text-lg font-bold'>
