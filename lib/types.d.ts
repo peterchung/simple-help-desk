@@ -15,6 +15,7 @@ export interface Filter {
 
 export interface TicketResponseType {
   ticketId: number;
+  priority: string;
   requestedBy: string;
   email: string;
   dateCreated: Date;

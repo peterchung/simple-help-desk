@@ -111,7 +111,6 @@ export default function TicketList({
         <table className='md:w-[750px] lg:w-[1000px] rounded-lg overflow-hidden sm:table-auto mb-6'>
           <thead className='bg-blue-700 text-white'>
             <tr className='text-center text-xs sm:text-lg'>
-              <th className='sm:p-2'>Priority</th>
               <th className='sm:p-2'>Status</th>
               <th className='sm:p-2 max-w-[100px]'>Requested By</th>
               <th className='sm:p-2 max-w-[100px]'>Subject</th>
@@ -130,7 +129,6 @@ export default function TicketList({
                   idx % 2 === 0 ? 'bg-gray-200' : 'bg-white'
                 }`}
               >
-                <td className='sm:py-2'>{ticket.priority}</td>
                 <td className='sm:py-2'>{ticket.status}</td>
                 <td className='sm:py-2 max-w-[100px] truncate'>
                   {ticket.requestedBy}

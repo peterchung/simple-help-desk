@@ -1,5 +1,6 @@
 export const formLabels = {
   requestedBy: 'Requested by:',
+  priority: 'Priority',
   email: 'Email:',
   dateCreated: 'Date Created:',
   lastModified: 'Last Modified:',
